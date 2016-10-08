@@ -13,7 +13,8 @@ const commands = {
   '/start': banner,
   'хуй': 'Ага... ну и что теперь?',
   'пизда': 'Джигурда!',
-  'гоа': 'Ветер еще жив?'
+  'гоа': 'Ветер еще жив?',
+  '1': '2',
 };
 
 (async function(){
@@ -21,6 +22,14 @@ const commands = {
   console.log('Loading rates...');
   let tmp = await currency.rates();
   console.log(`${Object.keys(tmp).length} currencies loaded.`);
+
+  bot.on('callback_query', (msg) => {
+    const user = msg.from.id;
+    const data = msg.data;
+    console.dir(msg);
+    bot.sendMessage(msg.from.id, `You clicked button with data '${data}'`);
+    bot.editMessageText('✔️ Button was here!', { chat_id: msg.message.chat.id, message_id: msg.message.message_id });
+  });
 
   bot.on('message', async function(msg) {
 
@@ -34,10 +43,25 @@ const commands = {
 
       let chatId = msg.chat.id;
       let command = msg.text.toLowerCase();
+      console.dir(msg);
       console.log(`Got '${command}' command from ${chatId} (${msg.chat.first_name})`);
 
       if(commands[command]) {
-        bot.sendMessage(chatId, commands[command]);
+        // bot.sendMessage(chatId, commands[command]);
+        // bot.sendLocation(chatId, 37.421955, -122.084058);
+
+        // see example here: https://github.com/yagop/node-telegram-bot-api/issues/162
+        var options = {
+          reply_markup: JSON.stringify({
+            inline_keyboard: [
+              [{text: 'Some button text 1', callback_data: '1'}], // Clicking will send "1"
+              // [{text: 'Some button text 2', callback_data: '2'}], // Clicking will send "2"
+              // [{text: 'Some button text 3', callback_data: '3'}]  // Clicking will send "3"
+            ]
+          })
+        };
+
+        bot.sendMessage(chatId, 'test', options);
       }
 
       let rates = await currency.rates();
