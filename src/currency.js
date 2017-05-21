@@ -25,9 +25,10 @@ class Currency {
   async rates() {
     var h = this.hourOfMonth();
 
-    if (h !== this.currentHour) {
+    if (h !== this.currentHour || !this.ratesOk()) {
       this.currentHour = h;
       this.latestRates = await this.fetchRates();
+      this.latestRates.date = new Date();
     }
 
     return this.latestRates;
@@ -37,6 +38,11 @@ class Currency {
     let d = new Date();
     let h = d.getHours();
     return d.getDate() * 24 + d.getHours();
+  }
+
+  ratesOk() {
+    const r = this.latestRates;
+    return r.INR && r.THB && r.RUB && r.USD;
   }
 }
 

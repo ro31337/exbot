@@ -8,6 +8,9 @@ class Info {
   }
 
   toString() {
+    const now = new Date();
+    const diff = now - this.rates.date;
+    const minsAgo = Math.ceil(diff / (1000 * 60));
     return `1 USD = ${this.format(this.rates.INR)} INR\n` +
       `1 USD = ${this.format(this.rates.RUB)} RUB\n` +
       `1 USD = ${this.format(this.rates.THB)} THB\n` +
@@ -18,7 +21,8 @@ class Info {
       "===\n" +
       `100 INR = ${this.format((this.rates.RUB / this.rates.INR) * 100)} RUB = ${this.format((this.rates.USD / this.rates.INR) * 100)} USD\n` +
       `100 THB = ${this.format((this.rates.RUB / this.rates.THB) * 100)} RUB = ${this.format((this.rates.USD / this.rates.THB) * 100)} USD\n` +
-      `(предложения по улучшению бота присылайте на roman.pushkin@gmail.com)`;
+      `Обновлено ${minsAgo} мин.назад (обновляется каждый час)\n` +
+      `(предложения по улучшению бота присылайте @ro31337)`;
   }
 
   format(value) {

@@ -1,6 +1,7 @@
 require('dotenv').config();
 import Currency from './currency';
 import Info from './info';
+import SafeInfo from './safe-info';
 import TelegramBot from 'node-telegram-bot-api';
 
 let bot = new TelegramBot(process.env.TELEGRAM_TOKEN, {polling: true});
@@ -34,7 +35,7 @@ const commands = {
       }
 
       let rates = await currency.rates();
-      let info = new Info(rates);
+      let info = new SafeInfo(new Info(rates), rates);
       let text = info.toString();
       bot.sendMessage(chatId, text);
       console.log(`Sent to ${chatId}:`);
