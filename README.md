@@ -15,13 +15,6 @@ Update your `.env` file:
 177081234:AbcdeE3879823SKjwhk2934
 ```
 
-`BOTANIO_TOKEN` - obtain your token [here](http://botan.io/). Token should look
-like this:
-
-```
-AbcdeF1987123kjhSkj2309
-```
-
 `CURRENCY_JSON_URL` - obtain your token [here](http://openexchangerates.org/).
 Example:
 
