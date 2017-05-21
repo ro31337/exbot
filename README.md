@@ -29,12 +29,6 @@ Run
 npm start
 ```
 
-Notes
-=====
-
-You can switch off botanio. It's used for stats only. But it's convenient and
-recommended.
-
 Try it
 ======
 
