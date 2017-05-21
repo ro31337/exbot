@@ -3,7 +3,6 @@ import Currency from './currency';
 import Info from './info';
 import TelegramBot from 'node-telegram-bot-api';
 
-let stats = require('botanio')(process.env.BOTANIO_TOKEN);
 let bot = new TelegramBot(process.env.TELEGRAM_TOKEN, {polling: true});
 let banner = 'Welcome! Just type any message and I\'ll get back to you with latest rates!\n' +
   'Добро пожаловать! Введите любое сообщение и я сообщу вам курс валют в странах ЮВА (обновляется каждый час).';
@@ -25,13 +24,7 @@ const commands = {
   bot.on('message', async function(msg) {
 
     try {
-
-      // track
-
-      stats.track(msg);
-
       // send reply
-
       let chatId = msg.chat.id;
       let command = msg.text.toLowerCase();
       console.log(`Got '${command}' command from ${chatId} (${msg.chat.first_name})`);
